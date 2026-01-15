@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Weather App</title>
+    <style>
+        body {
+            font-family: Arial;
+            margin: 40px;
+        }
+
+        input {
+            padding: 8px;
+            width: 250px;
+        }
+
+        button {
+            padding: 8px;
+        }
+
+        .card {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Weather Lookup</h2>
+    <form method="POST">
+        <input type="text" name="city" placeholder="Enter city" required>
+        <button type="submit">Get Weather</button>
+    </form>
+
+    {% if data %}
+    <div class="card">
+        {% if data.error %}
+        <p>{{ data.error }}</p>
+        {% else %}
+        <p><strong>City:</strong> {{ data.city }}</p>
+        <p><strong>Temperature:</strong> {{ data.temp }} °C</p>
+        <p><strong>Feels like:</strong> {{ feels_like }} °C</p>
+        <p><strong>Condition:</strong> {{ data.description }}</p>
+        <p><strong>Wind:</strong> {{ data.wind }}</p>
+        <p><strong>Local Time:</strong> {{ data.time }}</p>
+        {% endif %}
+    </div>
+    {% endif %}
+</body>
+
+</html>

@@ -9,14 +9,14 @@ from Util_Functions import (
 
 app = Flask(__name__)
 
-API_KEY = os.getenv("API_KEY", "eac1c7c41fc82c818b72db9a88510be1")
+API_KEY = os.getenv("API_KEY", "YOUR_OPENWEATHER_API_KEY")
 
 @app.route("/", methods=["GET", "POST"])
 def index():
     weather_data = None
 
     if request.method == "POST":
-        city = request.form.get("city")
+        city = request.form.get("city", "").strip()
 
         url = (
             f"https://api.openweathermap.org/data/2.5/weather?q={city}"
@@ -30,10 +30,8 @@ def index():
             local_time = unix_timestamp_to_localtime(response["dt"])
             description = response["weather"][0]["description"].title()
 
-            city_name = city.title() if city else response.get("name", "Unknown").title()
-
             weather_data = {
-                "city": city_name,
+                "city": city.title(),
                 "temp": round(temp_c, 2),
                 "wind": wind_dir,
                 "time": local_time,
